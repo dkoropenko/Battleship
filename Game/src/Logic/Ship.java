@@ -6,73 +6,76 @@ import java.util.ArrayList;
  * Created by Диман on 12.11.2015.
  */
 public class Ship {
-    private int type = 0;
-    private int hits = 0;
-    private int deck = 0;
-    private ArrayList<String[]> deckArrLoc;
-    String[] location;
+    //Содержит адрес палубы корабля и состояние "жив\подбит"
+    private ArrayList<int[]> deck;
+
+    //Содержит тип корабля. Количество палуб.
+    private int type;
+
+    //Содержит количество попаданий по кораблю.
+    private int hit;
 
     public Ship(){
+        deck = new ArrayList<>();
         type = 0;
-        hits = 0;
-        deck = 0;
-        deckArrLoc = new ArrayList<>();
+        hit = 0;
     }
 
-    public void setOptions (int type, int deck){
-        this.type = type;
-        this.deck = deck;
+    public void setType(int a){
+        type = a;
+    }
+    public int getType(){
+        return type;
     }
 
-    //public  getLocation(){
-     //   return location;
-    //}
+    public void setLocation(String orientation){
 
-    public void setLocation(int deck){
-        location= new String[2];
+        int x = (int) (Math.random()*6);
 
-        for (int i = 0; i < deck; i++) {
-            location[0] = "B";
-            location[1] = "1";
+        if (type == 2 && x > 5)
+            x = 6 - x;
+        if (type == 3 && x > 4)
+            x = 6 - x;
+        if (type == 4 && x > 3)
+            x = 6 - x;
 
-            deckArrLoc.add(i,location);
-        }
-    }
-
-    public int getHits(){
-        return this.hits;
-    }
-
-    public int getDeck(){
-        return this.deck;
-    }
-
-    public int checkHits(String[] hit){
-
-        String[] checkHit = new String[];
-
-
-        for (int i = 0; i < this.deck; i++) {
-            checkHit = this.deckArrLoc.get(i);
-
-            if (checkHit[0].equals(hit[0]) && checkHit[1].equals(hit[1])){
-                return 1;
+        if (orientation.equals("vertical"))
+        {
+            for (int i = 0; i < type; i++) {
+                deck.add(new int[]{x, x + i, 1});
             }
-            else {
-                return 0;
+        }
+        else{
+            for (int i = 0; i < type; i++) {
+                deck.add(new int[]{x+i, x, 1});
             }
         }
 
     }
 
-    /*
-    public int checkLive(){
-        if (this.hits == this.deck){
-            return 0;
+    public void getLocation(){
+        for (int i = 0; i < type; i++) {
+            System.out.println(deck.get(i)[0] + " " + deck.get(i)[1]);
         }
-        else {
-            return 1;
-        }
-    }*/
+    }
 
+    public String checkHits(int[] hit){
+
+        for (int i = 0; i < type; i++) {
+            if (deck.get(i)[2] == 1){
+                if (deck.get(i)[0] == hit[0] && deck.get(i)[1] == hit[1] ){
+                    this.hit++;
+                    deck.set(i,new int[]{deck.get(i)[0],deck.get(i)[1],0});
+                    return "Попал";
+                }
+            }
+        }
+        return "Мимо";
+    }
+
+    public void clearOprions(){
+        deck.clear();
+       // type = 0;
+        hit = 0;
+    }
 }
