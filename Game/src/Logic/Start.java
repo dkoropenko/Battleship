@@ -1,21 +1,31 @@
 package Logic;
 
 /**
- * Created by ����� on 12.11.2015.
+ * Created by Диман on 12.11.2015.
  */
 public class Start {
 
     public static void main(String[] args) {
         Ship ship = new Ship();
+        Map map = new Map();
 
-        ship.setType(3);
+        int[] deckCoordinats;
 
-        for (int i = 0; i < 5; i++) {
-            ship.setLocation("horizontal");
-            ship.getLocation();
-            ship.clearOprions();
-            System.out.println();
+        //Устанавливаем значение палуб корабля.
+        ship.setType(1);
+
+        //Устанавливаем координаты палуб корабля
+        for (int i = 0; i < ship.getType(); i++) {
+            ship.setLocation("vertical");
+            deckCoordinats = ship.getLocation(i);
+
+            map.setLocation(deckCoordinats[0], deckCoordinats[1]);
         }
+
+        for (int i = 0; i < map.getCell(); i++) {
+            System.out.println(map.getLocations(i)[0] +" "+ map.getLocations(i)[1]);
+        }
+
 
 
         /*

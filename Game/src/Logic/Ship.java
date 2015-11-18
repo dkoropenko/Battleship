@@ -3,16 +3,16 @@ package Logic;
 import java.util.ArrayList;
 
 /**
- * Created by Диман on 12.11.2015.
+ * Created by Р”РёРјР°РЅ on 12.11.2015.
  */
 public class Ship {
-    //Содержит адрес палубы корабля и состояние "жив\подбит"
+    //РџРµСЂРµРјРµРЅРЅР°СЏ СЃРѕРґРµСЂР¶РёС‚ id РїР°Р»СѓР±С‹ Рё Р°РґСЂРµСЃР° РїР°Р»СѓР±
     private ArrayList<int[]> deck;
 
-    //Содержит тип корабля. Количество палуб.
+    //РўРёРї РєРѕСЂР°Р±Р»СЏ.
     private int type;
 
-    //Содержит количество попаданий по кораблю.
+    //РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРїР°РґР°РЅРёР№.
     private int hit;
 
     public Ship(){
@@ -28,6 +28,7 @@ public class Ship {
         return type;
     }
 
+    //РЈСЃС‚Р°РЅРѕРІРєР° Р·РЅР°С‡РµРЅРёР№ РєРѕРѕСЂРґРёРЅР°С‚ РїР°Р»СѓР±С‹ РєРѕСЂР°Р±Р»СЏ.
     public void setLocation(String orientation){
 
         int x = (int) (Math.random()*6);
@@ -53,12 +54,12 @@ public class Ship {
 
     }
 
-    public void getLocation(){
-        for (int i = 0; i < type; i++) {
-            System.out.println(deck.get(i)[0] + " " + deck.get(i)[1]);
-        }
+    //Р’РѕР·РІСЂР°С‰Р°РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ РїР°Р»СѓР±С‹.
+    public int[] getLocation(int deckNumber){
+        return deck.get(deckNumber);
     }
 
+    //РџСЂРѕРІРµСЂРєР° РЅР° РїРѕРїР°РґР°РЅРёРµ.
     public String checkHits(int[] hit){
 
         for (int i = 0; i < type; i++) {
@@ -66,16 +67,15 @@ public class Ship {
                 if (deck.get(i)[0] == hit[0] && deck.get(i)[1] == hit[1] ){
                     this.hit++;
                     deck.set(i,new int[]{deck.get(i)[0],deck.get(i)[1],0});
-                    return "Попал";
+                    return "РџРѕРїР°Р»";
                 }
             }
         }
-        return "Мимо";
+        return "РњРёРјРѕ";
     }
 
     public void clearOprions(){
         deck.clear();
-       // type = 0;
         hit = 0;
     }
 }
