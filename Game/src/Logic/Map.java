@@ -9,28 +9,35 @@ public class Map {
     //Разер карты.
     private int size;
 
-    //Количество занятых ячеек
-    private int cell;
-
-    //Переменная содержит занятые ячейки поля
-    private ArrayList<int[]> coordinates;
+    //Игровое поле. Содержит координаты и значение ячейки.
+    // -1 пустое поле.
+    // 0 занято кораблем.
+    private int[][] cell;
 
     public Map(){
-        size = 6;
-        cell = 0;
-        coordinates = new ArrayList<>();
+        size = 10;
+        cell = new int[size][size];
     }
 
-    public int getCell(){
-        return cell;
+    //Инициализируем игровое поле.
+    public void initCell(){
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                cell[i][j] = -1;
+            }
+        }
     }
 
-    public void setLocation(int x, int y){
-        coordinates.add(new int[]{x,y});
-        cell++;
+    //Устанавливаем координаты корабля.
+    public void setShipLocation(ArrayList<int[]> x){
+        for (int i = 0; i < x.size(); i++) {
+            cell[x.get(i)[0]][x.get(i)[1]] = 0;
+        }
     }
 
-    public int[] getLocations(int partOfCell){
-        return coordinates.get(partOfCell);
+    //Проверяем занятость ячейки, а также свободные рядом.
+    public boolean checkBusyCell(int x, int y){
+        if (cell[x][y] == -1) return true;
+        return false;
     }
 }

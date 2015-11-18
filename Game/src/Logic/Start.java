@@ -12,7 +12,10 @@ public class Start {
         int[] deckCoordinats;
 
         //Устанавливаем значение палуб корабля.
-        ship.setType(1);
+        ship.setType(4);
+
+        int x = (int)(Math.random()* 10);
+        int y = (int)(Math.random()* 10);
 
         //Устанавливаем координаты палуб корабля
         for (int i = 0; i < ship.getType(); i++) {
