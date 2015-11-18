@@ -29,15 +29,99 @@ public class Map {
     }
 
     //Устанавливаем координаты корабля.
-    public void setShipLocation(ArrayList<int[]> x){
-        for (int i = 0; i < x.size(); i++) {
-            cell[x.get(i)[0]][x.get(i)[1]] = 0;
+    //И зона вокруг ячейки
+    //На вход приходят координаты палуб корабля
+    public void setShipLocation(int x, int y){
+        cell[x][y] = 0;
+        if (x > 0 && y > 0 && x < 9 && y < 9){
+            if (cell[x-1][y-1] != 0)    cell[x-1][y-1] = 1;
+            if (cell[x-1][y] != 0)      cell[x-1][y] = 1;
+            if (cell[x-1][y+1] != 0)    cell[x-1][y+1] = 1;
+            if (cell[x][y-1] != 0)      cell[x][y-1] = 1;
+            if (cell[x][y+1] != 0)      cell[x][y+1] = 1;
+            if (cell[x+1][y-1] != 0)    cell[x+1][y-1] = 1;
+            if (cell[x+1][y] != 0)      cell[x+1][y] = 1;
+            if (cell[x+1][y+1] != 0)    cell[x+1][y+1] = 1;
         }
+        else
+        if (x == 0 && y == 0){
+            if (cell[x][y+1] != 0)      cell[x][y+1] = 1;
+            if (cell[x+1][y] != 0)      cell[x+1][y] = 1;
+            if (cell[x+1][y-1] != 0)    cell[x+1][y-1] = 1;
+        }
+        else
+        if (x == 10 && y == 0){
+            if (cell[x-1][y] != 0)      cell[x-1][y] = 1;
+            if (cell[x-1][y+1] != 0)    cell[x-1][y+1] = 1;
+            if (cell[x][y+1] != 0)      cell[x][y+1] = 1;
+        }
+        else
+        if (x == 10 && y == 10){
+            if (cell[x-1][y-1] != 0)    cell[x-1][y-1] = 1;
+            if (cell[x-1][y] != 0)      cell[x-1][y] = 1;
+            if (cell[x][y-1] != 0)      cell[x][y-1] = 1;
+        }
+        else
+        if (x == 0 && y == 10){
+            if (cell[x][y-1] != 0)      cell[x][y-1] = 1;
+            if (cell[x+1][y-1] != 0)    cell[x+1][y-1] = 1;
+            if (cell[x+1][y] != 0)      cell[x+1][y] = 1;
+        }
+        else
+        if (y == 0){
+            if (cell[x-1][y] != 0)      cell[x-1][y] = 1;
+            if (cell[x-1][y+1] != 0)    cell[x-1][y+1] = 1;
+            if (cell[x][y+1] != 0)      cell[x][y+1] = 1;
+            if (cell[x+1][y] != 0)      cell[x+1][y] = 1;
+            if (cell[x+1][y+1] != 0)    cell[x+1][y+1] = 1;
+        }
+        else
+        if (x == 0){
+            if (cell[x][y-1] != 0)      cell[x][y-1] = 1;
+            if (cell[x][y+1] != 0)      cell[x][y+1] = 1;
+            if (cell[x+1][y-1] != 0)    cell[x+1][y-1] = 1;
+            if (cell[x+1][y] != 0)      cell[x+1][y] = 1;
+            if (cell[x+1][y-1] != 0)    cell[x+1][y-1] = 1;
+        }
+        else
+        if (x == 10){
+            if (cell[x][y-1] != 0)      cell[x][y-1] = 1;
+            if (cell[x-1][y-1] != 0)    cell[x-1][y-1] = 1;
+            if (cell[x-1][y] != 0)      cell[x-1][y] = 1;
+            if (cell[x-1][y+1] != 0)    cell[x-1][y+1] = 1;
+            if (cell[x][y+1] != 0)      cell[x][y+1] = 1;
+        }
+        else
+        if (y == 10){
+            if (cell[x-1][y] != 0)      cell[x-1][y] = 1;
+            if (cell[x-1][y-1] != 0)    cell[x-1][y-1] = 1;
+            if (cell[x][y-1] != 0)      cell[x][y-1] = 1;
+            if (cell[x+1][y-1] != 0)    cell[x+1][y-1] = 1;
+            if (cell[x+1][y] != 0)      cell[x+1][y] = 1;
+        }
+    }
+
+    public void printMap(){
+        System.out.println("\n* * * * * * * * * * * * * * * *");
+        for (int i = 0; i < 10; i++) {
+            System.out.print("*");
+
+            for (int j = 0; j < 10; j++) {
+                if (cell[i][j] == 0) System.out.print(" X ");
+                else System.out.print(" ^ ");
+            }
+            System.out.println("*");
+        }
+        System.out.println("* * * * * * * * * * * * * * * *");
     }
 
     //Проверяем занятость ячейки, а также свободные рядом.
     public boolean checkBusyCell(int x, int y){
-        if (cell[x][y] == -1) return true;
+        if (cell[x][y] == -1){
+            return true;
+        }
+        if (cell[x][y] != 1)
+            return true;
         return false;
     }
 }
