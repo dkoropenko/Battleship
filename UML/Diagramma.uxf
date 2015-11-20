@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>324</x>
+      <y>390</y>
+      <w>168</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Map&gt;&gt;
+Package::BattleShip
+--
+-размер карты
+int size
+
+-0 - пустая
+-1 - палуба корабля
+int[][] cell {x,y} = status
+--
+
+void setSize(int sise) {}
+int getSize() {return size;}
+void initMap(){}
+void setStatus (int x, int y, int status){}
+void getStatus (int x, int y)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>150</y>
+      <w>192</w>
+      <h>198</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Ship&gt;&gt;
+Package::BattleShip
+--
+-ID корабля
+int id;
+
+-Размер корабля (1-4)
+int size;
+
+-Статус корабля
+int status;
+
+-Палубы корабля
+ArrayList&lt;Deck&gt; = decks;
+--
+
+void setSize(int size){}
+int getSize(){return size;}
+
+void setStatus(int status){}
+int getStatus(){return status;}
+
+void initDecks(){}
+Deck getDeck(int deck){};
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>72</x>
+      <y>144</y>
+      <w>132</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Deck&gt;&gt;
+Package::BattleShip
+--
+int x;
+int y;
+int status;
+--
+void setCoordinates(int x, int y){}
+int getXCoordinate(){return x;}
+int getYCoordinate(){return y;}
+
+void setStatus(int status)
+void getStatus(){return status;}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>198</x>
+      <y>144</y>
+      <w>114</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>170.0;220.0;70.0;220.0;70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>336</y>
+      <w>198</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Logic&gt;&gt;
+Package::BattleShip
+--
+Ship ship = new Ship()
+Map map = new Map();
+--
+
+void initMap(){map.initMap();}
+void groupingShipsOnTheMap(){};
+boolean checkShoot(int x, int y){};
+boolean checkHit(int x, int y){};
+void changeStatus(int x, int y, int status);
+boolean endOfGame();
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>486</x>
+      <y>372</y>
+      <w>66</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>90.0;10.0;50.0;10.0;50.0;50.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>486</x>
+      <y>156</y>
+      <w>66</w>
+      <h>222</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>90.0;350.0;40.0;350.0;40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

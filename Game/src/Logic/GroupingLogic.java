@@ -6,6 +6,67 @@ import java.util.ArrayList;
  * Created by Диман on 18.11.2015.
  */
 public class GroupingLogic {
+    ArrayList<Ship> ships;
+    Map map;
+
+    public GroupingLogic(){
+        ships = new ArrayList<>();
+        map = new Map();
+    }
+
+    public void initMap(){
+        map.setSize(10);
+        for (int i = 0; i < map.getSize(); i++) {
+            for (int j = 0; j < map.getSize(); j++) {
+                map.setCellStatus(i,j,0);
+            }
+        }
+    }
+
+    public void groupingShipsOnTheMap(){
+
+        int orientation;
+        int x, y;
+        int countOfDeck = 4;
+
+        for (int i = 0; i < 10; i++) {
+            ships.add(new Ship());
+            ships.get(i).setSize(countOfDeck);
+
+            orientation = (int)(Math.random()*100);
+
+            if (orientation > 50){
+                x = (int)(Math.random()*10);
+                y = (int)(Math.random()*(11 - ships.get(i).getSize()));
+
+                for (int deck = 0; deck < ships.get(i).getSize(); deck++) {
+                    ships.get(i).setDecksCoordinates(x,y,deck);
+                    map.setCellStatus(x,y,1);
+                    y++;
+                }
+            }
+            else{
+                x = (int)(Math.random()*(11 - ships.get(i).getSize()));
+                y = (int)(Math.random()*10);
+
+                for (int deck = 0; deck < ships.get(i).getSize(); deck++) {
+                    ships.get(i).setDecksCoordinates(x,y,deck);
+                    map.setCellStatus(x,y,1);
+                    x++;
+                }
+            }
+
+            if (i > 0 && i < 3) countOfDeck = 3;
+            if (i > 2 && i < 6) countOfDeck = 2;
+            if (i > 5) countOfDeck = 3;
+        }
+
+        map.printMap();
+    }
+}
+
+
+/*
     private ArrayList<Ship> ships;
     private Map map;
 
@@ -95,4 +156,4 @@ public class GroupingLogic {
 
         map.printMap();
     }
-}
+ */

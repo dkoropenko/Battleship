@@ -8,7 +8,8 @@ public class Start {
     public static void main(String[] args) {
         GroupingLogic begin = new GroupingLogic();
 
-        begin.setShipTypes();
-        begin.GroupLogic();
+        begin.initMap();
+        begin.groupingShipsOnTheMap();
+
     }
 }

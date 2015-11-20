@@ -6,6 +6,46 @@ import java.util.ArrayList;
  * Created by koropenkods on 18.11.2015.
  */
 public class Map {
+    //Размер карты
+    private int size;
+
+    //Клетка карты
+    //0 - пустая
+    //1 - палуба корабля
+    private int[][] cell;
+
+    public Map(){
+        size = 0;
+    }
+
+    public void setSize(int size){
+        this.size = size;
+        this.cell = new int[size][size];
+    }
+    public int getSize(){ return size;}
+
+    public void setCellStatus(int x, int y, int status){
+        this.cell[x][y] = status;
+    }
+    public int getCellStatus(int x, int y) { return this.cell[x][y]; }
+
+    public void printMap(){
+        System.out.println("\n* * * * * * * * * * * * * * * *");
+        for (int i = 0; i < 10; i++) {
+            System.out.print("*");
+
+            for (int j = 0; j < 10; j++) {
+                if (cell[i][j] == 0) System.out.print(" ^ ");
+                else System.out.print(" X ");
+            }
+            System.out.println("*");
+        }
+        System.out.println("* * * * * * * * * * * * * * * *");
+    }
+}
+
+
+/*
     //Разер карты.
     private int size;
 
@@ -124,4 +164,4 @@ public class Map {
             return true;
         return false;
     }
-}
+ */
