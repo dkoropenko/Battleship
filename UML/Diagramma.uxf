@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.1">
-  <zoom_level>6</zoom_level>
+  <zoom_level>12</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
-      <y>390</y>
-      <w>168</w>
-      <h>162</h>
+      <x>504</x>
+      <y>492</y>
+      <w>336</w>
+      <h>276</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Map&gt;&gt;
 Package::BattleShip
@@ -15,25 +15,23 @@ Package::BattleShip
 -размер карты
 int size
 
--0 - пустая
--1 - палуба корабля
-int[][] cell {x,y} = status
+ArrayList&lt;Cell&gt; cells;
 --
 
 void setSize(int sise) {}
 int getSize() {return size;}
-void initMap(){}
-void setStatus (int x, int y, int status){}
-void getStatus (int x, int y)</panel_attributes>
+
+void setCellStatus (int x, int y, int status){}
+void getCellStatus (int x, int y)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>300</x>
-      <y>150</y>
-      <w>192</w>
-      <h>198</h>
+      <x>456</x>
+      <y>12</y>
+      <w>384</w>
+      <h>396</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Ship&gt;&gt;
 Package::BattleShip
@@ -65,10 +63,10 @@ Deck getDeck(int deck){};
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>72</x>
-      <y>144</y>
-      <w>132</w>
-      <h>120</h>
+      <x>0</x>
+      <y>0</y>
+      <w>264</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Deck&gt;&gt;
 Package::BattleShip
@@ -88,10 +86,10 @@ void getStatus(){return status;}</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>144</y>
-      <w>114</w>
-      <h>144</h>
+      <x>252</x>
+      <y>0</y>
+      <w>228</w>
+      <h>288</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>170.0;220.0;70.0;220.0;70.0;10.0;10.0;10.0</additional_attributes>
@@ -99,10 +97,10 @@ void getStatus(){return status;}</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>540</x>
-      <y>336</y>
-      <w>198</w>
-      <h>126</h>
+      <x>936</x>
+      <y>384</y>
+      <w>396</w>
+      <h>252</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Logic&gt;&gt;
 Package::BattleShip
@@ -124,10 +122,10 @@ boolean endOfGame();
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>372</y>
-      <w>66</w>
-      <h>42</h>
+      <x>828</x>
+      <y>456</y>
+      <w>132</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>90.0;10.0;50.0;10.0;50.0;50.0;10.0;50.0</additional_attributes>
@@ -135,12 +133,50 @@ boolean endOfGame();
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>156</y>
-      <w>66</w>
-      <h>222</h>
+      <x>828</x>
+      <y>24</y>
+      <w>132</w>
+      <h>444</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>90.0;350.0;40.0;350.0;40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>480</y>
+      <w>252</w>
+      <h>312</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Cell&gt;&gt;
+Package::Battleship
+--
+int x;
+int y;
+
+-0 - пустая
+-1 - палуба корабля
+int status;
+--
+
+void setCoordinates(int x, int y)
+int getX(){}
+int getY(){}
+
+void setStatus(int status)
+int getStatus(){}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>504</y>
+      <w>168</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;90.0;70.0;90.0;70.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
