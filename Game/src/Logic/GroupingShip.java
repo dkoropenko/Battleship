@@ -1,13 +1,17 @@
 package Logic;
 
+import java.util.ArrayList;
+
 /**
  * Created by koropenkods on 24.11.2015.
  */
 public class GroupingShip {
     Map map;
+    ArrayList<Ship> ships;
 
-    public GroupingShip(Map map){
+    public GroupingShip(Map map, ArrayList<Ship> ships){
         this.map = map;
+        this.ships = ships;
         map.initMap();
     }
 
@@ -32,9 +36,10 @@ public class GroupingShip {
                 y =(int)(Math.random() * 9);
                 break;
         }
-        this.createShip(x,y,size,locate);
+        this.createShip(x,y,size,locate,0);
 
 
+        //Заполняем поле другими кораблями
         boolean iterac = true;
         int count = 0;
         size = 3;
@@ -45,46 +50,45 @@ public class GroupingShip {
 
                 switch (locate){
                     case 1:
-                        x =(int)(Math.random() * 9);
+                        x =(int)(Math.random() * 10);
                         y =(int)(Math.random() * (10-size));
                         count = checkFreedomCellVertical(x,y,size);
                         break;
                     case 2:
                         x =(int)(Math.random() * (10-size));
-                        y =(int)(Math.random() * 9);
+                        y =(int)(Math.random() * 10);
                         count = checkFreedomCellHorizont(x,y,size);
                         break;
                 }
 
 
                 if (count == 0){
-                    for (int i = y; i < y+size; i++) {
-                        this.createShip(x,y,size,locate);
-                    }
+                    this.createShip(x,y,size,locate, j+1);
                     iterac = false;
                 }
             }
 
             iterac = true;
-            System.out.println("size: "+ size);
             if (j == 0) size = 3;
             if (j == 1 || j == 2 || j == 3) size = 2;
             if (j == 4 || j == 5 || j == 6 || j == 7) size = 1;
         }
-
-        map.printMap();
     }
 
-    private void createShip(int x, int y, int size, int locate){
+    private void createShip(int x, int y, int size, int locate, int shipIndex){
+        ships.add(new Ship(size));
+
         switch (locate){
             case 1:
                 for (int i = y; i < y+size; i++) {
-                    map.setStatusCell(x,i,1);
+                    map.setStatusCell(x, i, 1);
+                    ships.get(shipIndex).setDeckStatus(x,i);
                 }
                 break;
             case 2:
                 for (int i = x; i < x+size; i++) {
-                    map.setStatusCell(i,y,1);
+                    map.setStatusCell(i, y, 1);
+                    ships.get(shipIndex).setDeckStatus(i, y);
                 }
                 break;
         }
