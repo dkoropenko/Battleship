@@ -38,7 +38,6 @@ public class GroupingShip {
         }
         this.createShip(x,y,size,locate,0);
 
-
         //Заполняем поле другими кораблями
         boolean iterac = true;
         int count = 0;
@@ -46,6 +45,7 @@ public class GroupingShip {
 
         for (int j = 0; j < 9; j++) {
             while (iterac){
+
                 locate = (int)(Math.random() * 2) + 1;
 
                 switch (locate){
@@ -60,7 +60,6 @@ public class GroupingShip {
                         count = checkFreedomCellHorizont(x,y,size);
                         break;
                 }
-
 
                 if (count == 0){
                     this.createShip(x,y,size,locate, j+1);
@@ -82,13 +81,13 @@ public class GroupingShip {
             case 1:
                 for (int i = y; i < y+size; i++) {
                     map.setStatusCell(x, i, 1);
-                    ships.get(shipIndex).setDeckStatus(x,i);
+                    ships.get(shipIndex).setDeckStatus(x,i,1);
                 }
                 break;
             case 2:
                 for (int i = x; i < x+size; i++) {
                     map.setStatusCell(i, y, 1);
-                    ships.get(shipIndex).setDeckStatus(i, y);
+                    ships.get(shipIndex).setDeckStatus(i,y,1);
                 }
                 break;
         }
@@ -99,39 +98,34 @@ public class GroupingShip {
 
         for (int i = y; i < y+size ; i++) {
             //Проверяем место куда ставим палубу
-            if (map.getCellStatus(x,i) == 1) {
+            if (map.getCellStatus(x,y) == 1) {
                 count++;
-                //System.out.println("1 if");
                 break;
             }
 
             //Промеряем место слева от корабля
             if (x > 0 && map.getCellStatus(x - 1, i) == 1) {
                 count++;
-                //System.out.println("2 if");
                 break;
             }
 
             //Проверяем место справа от корабля
             if (x < 9 && map.getCellStatus(x + 1, i) == 1) {
                 count++;
-                //System.out.println("3 if");
                 break;
             }
         }
 
         for (int i = 0; i < 3; i++) {
             //Проверяем сверху корабля
-            if (x-1+i > 0 && x-1+i < 9 && y > 0 && map.getCellStatus(x-1+i, y - 1) == 1) {
+            if (x-1+i >= 0 && x-1+i <= 9 && y > 0 && map.getCellStatus(x-1+i, y - 1) == 1) {
                 count++;
-                //System.out.println("4 if");
                 break;
             }
 
             //Проверяем под кораблем
-            if (x-1+i < 9 && x-1+i > 0 && y+size < 9 && map.getCellStatus(x - 1 + i, y + size) == 1) {
+            if (x-1+i >= 0 && x-1+i <= 9 && y+size-1 < 9 && map.getCellStatus(x - 1 + i, y + size) == 1) {
                 count++;
-                //System.out.println("5 if");
                 break;
             }
         }
@@ -143,39 +137,34 @@ public class GroupingShip {
 
         for (int i = x; i < x+size ; i++) {
             //Проверяем место куда ставим палубу
-            if (map.getCellStatus(i,y) == 1) {
+            if (map.getCellStatus(x,y) == 1) {
                 count++;
-                //System.out.println("1h if");
                 break;
             }
 
             //Промеряем место сверху от корабля
             if (y > 0 && map.getCellStatus(i, y - 1) == 1) {
                 count++;
-                //System.out.println("2h if");
                 break;
             }
 
             //Проверяем место снизу от корабля
             if (y < 9 && map.getCellStatus(i, y + 1) == 1) {
                 count++;
-                //System.out.println("3h if");
                 break;
             }
         }
 
         for (int i = 0; i < 3; i++) {
             //Проверяем слева от корабля
-            if (y-1+i > 0 && y-1+i < 9 && x > 0 && map.getCellStatus(x - 1, y-1+i) == 1) {
+            if (y-1+i >= 0 && y-1+i <= 9 && x > 0 && map.getCellStatus(x - 1, y-1+i) == 1) {
                 count++;
-                //System.out.println("4 if");
                 break;
             }
 
             //Проверяем справа от кораблем
-            if (y-1+i < 9 && y-1+i > 0 && x+size < 9 && map.getCellStatus(x+size, y-1+i) == 1) {
+            if (y-1+i >= 0 && y-1+i <= 9 && x+size-1 < 9 && map.getCellStatus(x+size, y-1+i) == 1) {
                 count++;
-                //System.out.println("5 if");
                 break;
             }
         }

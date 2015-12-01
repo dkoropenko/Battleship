@@ -38,7 +38,7 @@ public class Map {
             System.out.print(i +"* ");
             for (int j = 0; j < 10; j++) {
                 if(coodrinates[j][i] == 1) System.out.print("X ");
-                //else if (coodrinates[i][j] == 2) System.out.print("0 ");
+                else if (coodrinates[j][i] == 2) System.out.print("0 ");
                 else System.out.print("^ ");
             }
             System.out.println("*");
