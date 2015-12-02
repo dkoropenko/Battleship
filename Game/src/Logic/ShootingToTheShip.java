@@ -25,7 +25,7 @@ public class ShootingToTheShip {
     }
 
     //Метод для обрабатывания введеных данных.
-    public void doShoot(){
+    public int doShoot(){
         inputData = new Scanner(System.in);
         System.out.println("Введите Х: ");
         x = inputData.nextInt();
@@ -33,13 +33,30 @@ public class ShootingToTheShip {
         y = inputData.nextInt();
 
         //Проверяем введенные данные на попадание.
-        checkHit(x,y);
+        if (checkHit(x,y))
+            return 1;
+        else
+            return 2;
     }
 
-    public void checkHit(int x, int y){
+    public int doAutoShoot(){
+
+        x = (int)(Math.random()*10);
+        y = (int)(Math.random()*10);
+
+        //Проверяем введенные данные на попадание.
+        if (checkHit(x,y))
+            return 1;
+        else
+            return 2;
+    }
+
+    public boolean checkHit(int x, int y){
+        boolean result;
 
         if (map.getCellStatus(x,y) == 1){
             System.out.println("Вы попали в корабль");
+            result = true;
             map.setStatusCell(x,y,2);
 
             for (int i = 0; i < ships.size(); i++) {
@@ -49,8 +66,11 @@ public class ShootingToTheShip {
                 }
             }
         }
-        else
+        else{
             System.out.println("Мимо. Попробуйте снова");
+            result = false;
+        }
+        return result;
     }
 
     //Метод по проверки оставшихся палуб целых кораблей.

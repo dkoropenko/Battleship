@@ -8,20 +8,44 @@ import java.util.Scanner;
  */
 public class Start {
     public static void main(String[] args) {
+
+        //Создаем 2 карты для игрока и противника
         Map enemyMap = new Map(10);
+        Map playerMap = new Map(10);
+
+        //Создаем корабли для игрока и противника
         ArrayList<Ship> enemyShips = new ArrayList<>();
-        ShootingToTheShip logic = new ShootingToTheShip(enemyMap,enemyShips);
+        ArrayList<Ship> playerShips = new ArrayList<>();
+
+        //Логика игры
+        ShootingToTheShip shootToEnemy = new ShootingToTheShip(enemyMap,enemyShips);
+        ShootingToTheShip shootToPlayer = new ShootingToTheShip(playerMap,playerShips);
 
         //Заполняем карту кораблями
         GroupingShip enemyGroupShipLogic = new GroupingShip(enemyMap, enemyShips);
+        GroupingShip playerGroupShipLogic = new GroupingShip(playerMap, playerShips);
+
         enemyGroupShipLogic.groupShip();
+        playerGroupShipLogic.groupShip();
 
-        //Выводим карту противника
+        //Выводим карту игрока и противника
         //И стреляем
-        while (!(logic.checkShipsDeck())){
-            enemyMap.printMap();
+        int checkHit = 1;
+        while (!(shootToEnemy.checkShipsDeck()) || !(shootToPlayer.checkShipsDeck())){
+            //System.out.println("Карта противника: ");
+            //enemyMap.printHiddenMap();
 
-            logic.doShoot();
+            //System.out.println("\nКарта игрока: ");
+            //playerMap.printMap();
+
+            switch (checkHit){
+                case 1:
+                    System.out.println("Ваш ход");
+                    checkHit = shootToEnemy.doAutoShoot(); break;
+                case 2:
+                    System.out.println("\nСтреляет противник");
+                    checkHit = shootToPlayer.doAutoShoot(); break;
+            }
         }
 
         System.out.println("Финал игры:");
@@ -30,11 +54,5 @@ public class Start {
         for (int j = 0; j < enemyShips.size(); j++) {
             enemyShips.get(j).printShip();
         }
-
-        //Выводим статистику кораблей противника
-        //for (int i = 0; i < enemyShips.size(); i++) {
-        //    enemyShips.get(i).printShip();
-       // }
-
     }
 }
