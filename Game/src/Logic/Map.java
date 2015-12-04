@@ -4,8 +4,15 @@ package Logic;
  * Created by koropenkods on 24.11.2015.
  */
 public class Map {
+    //Размер карты
     private int size;
 
+    //Индексы массива координаты ячеки
+    //Значение - состояние ячеки
+    //0 - пустая ячейка
+    //1 - стоит палуба корабля
+    //2 - подбитая палуба корабля
+    //3 - уже произведено попадание в эту ячейку
     private int[][] coodrinates;
 
     public Map(int size){
@@ -13,9 +20,13 @@ public class Map {
         coodrinates = new int[size][size];
     }
 
+    public int getSize(){
+        return this.size;
+    }
+
     void initMap(){
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 coodrinates[i][j] = 0;
             }
         }
@@ -34,11 +45,12 @@ public class Map {
         System.out.println(" * 0 1 2 3 4 5 6 7 8 9 *");
         System.out.println("** * * * * * * * * * * *");
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size; i++) {
             System.out.print(i +"* ");
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < size; j++) {
                 if(coodrinates[j][i] == 1) System.out.print("X ");
-                else if (coodrinates[j][i] == 2) System.out.print("0 ");
+                else if (coodrinates[j][i] == 2) System.out.print("S ");
+                else if (coodrinates[j][i] == 3) System.out.print("H ");
                 else System.out.print("^ ");
             }
             System.out.println("*");
@@ -50,10 +62,11 @@ public class Map {
         System.out.println(" * 0 1 2 3 4 5 6 7 8 9 *");
         System.out.println("** * * * * * * * * * * *");
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size; i++) {
             System.out.print(i +"* ");
-            for (int j = 0; j < 10; j++) {
-                if (coodrinates[j][i] == 2) System.out.print("0 ");
+            for (int j = 0; j < size; j++) {
+                if (coodrinates[j][i] == 2) System.out.print("X ");
+                else if (coodrinates[j][i] == 3) System.out.print("H ");
                 else System.out.print("^ ");
             }
             System.out.println("*");

@@ -31,21 +31,26 @@ public class Start {
         //Выводим карту игрока и противника
         //И стреляем
         int checkHit = 1;
-        while (!(shootToEnemy.checkShipsDeck()) || !(shootToPlayer.checkShipsDeck())){
-            //System.out.println("Карта противника: ");
-            //enemyMap.printHiddenMap();
-
-            //System.out.println("\nКарта игрока: ");
-            //playerMap.printMap();
-
+        boolean count = true;
+        while (count){
             switch (checkHit){
                 case 1:
+                    System.out.println("Карта противника: ");
+                    //enemyMap.printHiddenMap();
+                    enemyMap.printMap();
+
+                    System.out.println("\nКарта игрока: ");
+                     playerMap.printMap();
+
                     System.out.println("Ваш ход");
-                    checkHit = shootToEnemy.doAutoShoot(); break;
+                    checkHit = shootToEnemy.doShoot(); break;
                 case 2:
                     System.out.println("\nСтреляет противник");
                     checkHit = shootToPlayer.doAutoShoot(); break;
             }
+
+            if (shootToEnemy.checkShipsDeck()) count = false;
+            if (shootToPlayer.checkShipsDeck()) count = false;
         }
 
         System.out.println("Финал игры:");
