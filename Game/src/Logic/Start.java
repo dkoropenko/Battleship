@@ -17,16 +17,18 @@ public class Start {
         ArrayList<Ship> enemyShips = new ArrayList<>();
         ArrayList<Ship> playerShips = new ArrayList<>();
 
-        //Логика игры
-        ShootingToTheShip shootToEnemy = new ShootingToTheShip(enemyMap,enemyShips);
-        ShootingToTheShip shootToPlayer = new ShootingToTheShip(playerMap,playerShips);
-
         //Заполняем карту кораблями
-        GroupingShip enemyGroupShipLogic = new GroupingShip(enemyMap, enemyShips);
-        GroupingShip playerGroupShipLogic = new GroupingShip(playerMap, playerShips);
+        GroupingShip robotShips = new GroupingShip(enemyMap, enemyShips);
+        GroupingShip humanShips = new GroupingShip(playerMap, playerShips);
+        robotShips.groupShip();
+        humanShips.groupShip();
 
-        enemyGroupShipLogic.groupShip();
-        playerGroupShipLogic.groupShip();
+        //Логика игры
+        Robot robot = new Robot(playerMap,playerShips);
+        Human human = new Human(enemyMap,enemyShips);
+
+        //Устанавливаем сложность игры
+        robot.setDifficult("easy");
 
         //Выводим карту игрока и противника
         //И стреляем
@@ -40,19 +42,22 @@ public class Start {
                     enemyMap.printMap();
 
                     System.out.println("\nКарта игрока: ");
-                     playerMap.printMap();
+                    playerMap.printMap();
 
                     System.out.println("Ваш ход");
-                    checkHit = shootToEnemy.doShoot(); break;
+                    checkHit = human.doShoot(); break;
                 case 2:
                     System.out.println("\nСтреляет противник");
-                    checkHit = shootToPlayer.doAutoShoot(); break;
+                    checkHit = robot.doShoot(); break;
             }
 
-            if (shootToEnemy.checkShipsDeck()) count = false;
-            if (shootToPlayer.checkShipsDeck()) count = false;
+            //Завершаем игру, если у кого-то закончатся корабли.
+            if (robot.checkShipsDeck()) count = false;
+            if (human.checkShipsDeck()) count = false;
         }
 
+
+        //Выводим результат
         System.out.println("Финал игры:");
         enemyMap.printMap();
 
