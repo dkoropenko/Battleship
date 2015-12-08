@@ -34,6 +34,7 @@ public class Start {
         //И стреляем
         int checkHit = 1;
         boolean count = true;
+
         while (count){
             switch (checkHit){
                 case 1:

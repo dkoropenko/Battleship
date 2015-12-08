@@ -17,13 +17,18 @@ public class Robot extends Logic {
     private int x,y;
 
     //Сигнализация о попадании в корабль
-    int hit;
+    int hit, hits;
+
+    //Количество свободных (не стрелянных) ячеек карты
+    ArrayList<Integer[]> freeCell;
 
 
     public Robot (Map map, ArrayList<Ship> ships){
         super(map,ships);
         hit = 0;
         orientation = "horizont";
+        freeCell = new ArrayList<>();
+        hits = 0;
     }
 
     //Указываем уровень сложности игры.
@@ -45,7 +50,7 @@ public class Robot extends Logic {
 
         //Проверяем введенные данные на попадание.
         if (checkHit(x, y)){
-            hit = 0;
+            hit = 1;
             return 2;
         }
         else return 1;
@@ -55,30 +60,44 @@ public class Robot extends Logic {
     //Компьютер стреляет рандомно
     //и добивает корабли
     private void easyDiffucult(){
-        boolean count;
-
         //Если добили корабль, то бьем опять случайно
         if (hit == 1 && ships.get(shipID).getHits() == ships.get(shipID).getSize()) hit = 0;
 
+        //Если нет попадания в корабль, то бьем случайно
         if (hit == 0){
-            count = true;
-            x = (int)(Math.random() * map.getSize());
-            y = (int)(Math.random() * map.getSize());
 
-            while (count){
-                if (map.getCellStatus(x,y) > 1){
-                    x = (int)(Math.random() * map.getSize());
-                    y = (int)(Math.random() * map.getSize());
+            //Записываем все неотстреленные клетки
+            //А так же где есть корабли
+            for (int i = 0; i < map.getSize(); i++) {
+                for (int j = 0; j < map.getSize(); j++) {
+                    if (map.getCellStatus(j,i) < 2) {
+                        freeCell.add(new Integer[]{j,i});
+                    }
                 }
-                else count = false;
             }
+
+            //Случайным образом выбираем куда стрелять
+            int i = (int)(Math.random() * freeCell.size());
+            x = freeCell.get(i)[0];
+            y = freeCell.get(i)[1];
+
+            //Очищаем коллекцию пустых клеток.
+            freeCell.clear();
         }
+        //Если ранили корабль, то добиваем.
         else{
-            if (orientation.equals("horizont")){
-                if (x > 0 && map.getCellStatus(x-1,y) > 1){
-                    x -= 1;
-                }
+            switch (orientation){
+                case "horizont":
+                    if (x > 0 && map.getCellStatus(x-1,y) > 1) {
+                        x = x - 1;
+                        hits++;
+                    }
+                    if (map.getCellStatus(x,y) > 1 && hit > 0) x = x + hits + 1;
             }
+
+            if (y > 0 && map.getCellStatus(x,y-1) > 1) y = y - 1;
+            if (x < 0 && map.getCellStatus(x+1,y) > 1) x = x + 1;
+            if (y < 0 && map.getCellStatus(x,y+1) > 1) y = y + 1;
         }
     }
 
@@ -97,69 +116,3 @@ public class Robot extends Logic {
         }
     }
 }
-
-/*
-int check = 0;
-        if (prevStatus == 0){
-            boolean result = true;
-            x = (int)(Math.random() * map.getSize());
-            y = (int)(Math.random() * map.getSize());
-
-            while(result){
-                //Если ячейка имеет статус "Подбитая палуба" и
-                //"Уже попадали в нее", то берем новую случайную
-                //Пару координат.
-                if (map.getCellStatus(x,y) > 1){
-                    x = (int)(Math.random() * map.getSize());
-                    y = (int)(Math.random() * map.getSize());
-                }
-                else{
-                    result = false;
-                }
-            }
-        }
-        else{
-            //Идентифицируем корабль для уточнения
-            //Убили мы его или нет
-            if (ships.get(shipID).getSize() != ships.get(shipID).getHits()){
-
-                if (prevX > 0 && map.getCellStatus(prevX - 1, prevY) < 2){
-                    x = prevX - 1;
-                    y = prevY;
-                    check++;
-                }
-                else if (prevX < 9 && map.getCellStatus(prevX + 1, prevY) < 2){
-                    x = prevX + 1;
-                    y = prevY;
-                    check++;
-                }
-                else if (prevY > 0 && map.getCellStatus(prevX, prevY - 1) < 2){
-                    x = prevX;
-                    y = prevY - 1;
-                    check++;
-                }
-                else if (prevY < 9 && map.getCellStatus(prevX, prevY + 1) < 2){
-                    x = prevX;
-                    y = prevY + 1;
-                    check++;
-                }
-            }
-            else{
-                prevStatus = 0;
-            }
-        }
-
-        //Проверяем введенные данные на попадание.
-        //Если попали, то записываем старые координаты
-        //И пытаемся убить корабль
-        if (checkHit(x,y)) {
-            prevStatus = 1;
-            prevX = x;
-            prevY = y;
-
-            saveX = x;
-            saveY = y;
-            return 2;
-        }
-        else return 1;
- */

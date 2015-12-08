@@ -13,13 +13,9 @@ public class Logic {
 
     protected int shipID;
 
-    //Количество пападаний
-    private int hits;
-
     public Logic (Map map, ArrayList<Ship> ships){
         this.map = map;
         this.ships = ships;
-        hits = 0;
     }
 
     public int doShoot(){ return 1; }
@@ -39,7 +35,6 @@ public class Logic {
 
                 if (ships.get(i).getDeckStatus(x,y) == 1){
                     ships.get(i).setDeckStatus(x,y,2);
-                    hits++;
                     shipID = i;
                 }
             }
@@ -73,10 +68,15 @@ public class Logic {
         return result;
     }
 
-    //Метод по проверки оставшихся палуб целых кораблей.
+    //Метод по проверки оставшихся целых кораблей.
     public boolean checkShipsDeck(){
-        boolean result = true;
-        if (this.hits != 20) result = false;
+        boolean result = false;
+        int shipsAlive = 0;
+
+        for (int i = 0; i <ships.size() ; i++) {
+            if (ships.get(i).isAlive()) shipsAlive++;
+        }
+        if (shipsAlive == 0) result = true;
 
         return result;
     }

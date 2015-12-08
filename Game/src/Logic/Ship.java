@@ -53,6 +53,7 @@ public class Ship {
             }
         }
     }
+
     public int getDeckStatus(int x, int y){
         int result = 0;
         //Находим плубу с координатами х и у
@@ -69,6 +70,19 @@ public class Ship {
     }
     public int getDeckCoordinateY(int deck){
         return decks.get(deck).getY();
+    }
+
+    public boolean isAlive(){
+        int countOfDeckAlive = 0;
+        boolean result = false;
+
+        for (int i = 0; i < decks.size(); i++) {
+            if(decks.get(i).getStatus() == 1) countOfDeckAlive++;
+            System.out.println("Decks status "+ decks.get(i).getStatus());
+        }
+        if (countOfDeckAlive != 0) result = true;
+
+        return result;
     }
 
     public void printShip(){
