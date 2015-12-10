@@ -50,7 +50,7 @@ public class Map {
             for (int j = 0; j < size; j++) {
                 if(coodrinates[j][i] == 1) System.out.print("X ");
                 else if (coodrinates[j][i] == 2) System.out.print("S ");
-                else if (coodrinates[j][i] == 3) System.out.print("H ");
+                else if (coodrinates[j][i] == 3) System.out.print("* ");
                 else System.out.print("^ ");
             }
             System.out.println("*");

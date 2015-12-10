@@ -15,9 +15,11 @@ public class Robot extends Logic {
 
     //Введенные координаты
     private int x,y;
+    private int startX, startY;
 
     //Сигнализация о попадании в корабль
-    int hit, hits;
+    private int hit, hits;
+    private int getit;
 
     //Количество свободных (не стрелянных) ячеек карты
     ArrayList<Integer[]> freeCell;
@@ -25,10 +27,10 @@ public class Robot extends Logic {
 
     public Robot (Map map, ArrayList<Ship> ships){
         super(map,ships);
-        hit = 0;
-        orientation = "horizont";
+        orientation = "";
         freeCell = new ArrayList<>();
-        hits = 0;
+        hit = 0;
+        getit = 0;
     }
 
     //Указываем уровень сложности игры.
@@ -53,19 +55,27 @@ public class Robot extends Logic {
             hit = 1;
             return 2;
         }
-        else return 1;
+        else{
+            x = startX;
+            y = startY;
+            return 1;
+        }
     }
 
     //Простая сложность.
     //Компьютер стреляет рандомно
     //и добивает корабли
     private void easyDiffucult(){
+
         //Если добили корабль, то бьем опять случайно
-        if (hit == 1 && ships.get(shipID).getHits() == ships.get(shipID).getSize()) hit = 0;
+        if (hit == 1 && ships.get(shipID).getHits() == ships.get(shipID).getSize()) {
+            hit = 0;
+            getit = 0;
+            orientation = "";
+        }
 
         //Если нет попадания в корабль, то бьем случайно
         if (hit == 0){
-
             //Записываем все неотстреленные клетки
             //А так же где есть корабли
             for (int i = 0; i < map.getSize(); i++) {
@@ -81,23 +91,74 @@ public class Robot extends Logic {
             x = freeCell.get(i)[0];
             y = freeCell.get(i)[1];
 
+            //Если мы попали в корабль, то записываем координаты
+            //этой палубы.
+            startX = x;
+            startY = y;
+
+            System.out.println("StartX = "+ startX);
+            System.out.println("StartY = "+ startY);
+
             //Очищаем коллекцию пустых клеток.
             freeCell.clear();
         }
         //Если ранили корабль, то добиваем.
-        else{
-            switch (orientation){
-                case "horizont":
-                    if (x > 0 && map.getCellStatus(x-1,y) > 1) {
-                        x = x - 1;
-                        hits++;
-                    }
-                    if (map.getCellStatus(x,y) > 1 && hit > 0) x = x + hits + 1;
-            }
+        else
+        {
+            System.out.println("Добиваем корабль.");
 
-            if (y > 0 && map.getCellStatus(x,y-1) > 1) y = y - 1;
-            if (x < 0 && map.getCellStatus(x+1,y) > 1) x = x + 1;
-            if (y < 0 && map.getCellStatus(x,y+1) > 1) y = y + 1;
+            if (getit == 1){
+                System.out.println("Попали, ёпта )))");
+                if (x < startX || x > startX) orientation = "horizont";
+                else orientation = "vertical";
+
+                System.out.println("Ориентация корабля: "+ orientation);
+
+
+                //Осталось этот свитч доделать и обстрел готов!!!!
+                switch (orientation){
+                    case "horizont":
+                        if (map.getCellStatus(x,y)==3){
+                            startX += 1;
+                            x = startX;
+                        }
+                        else
+                            x -= 1;
+                        break;
+                    case "vertical":
+                        if (map.getCellStatus(x,y) == 3){
+                            startY += 1;
+                            y = startY;
+                        }
+                        else y -= 1;
+                }
+
+            }
+            else{
+                x = startX; y = startY;
+
+                System.out.println("Обстрел вокруг корабля");
+                if (x > 0 && map.getCellStatus(x - 1, y) <= 1){
+                    System.out.println("Ячейка слева ОГОНЬ");
+                    x = x - 1;
+                }
+                else if (y > 0 && map.getCellStatus(x,y-1) <= 1) {
+                    System.out.println("Ячейка сверху ОГОНЬ");
+                    y = y - 1;
+                }
+                else if (x < 9 && map.getCellStatus(x+1,y) <= 1) {
+                    System.out.println("Ячейка справа ОГОНЬ");
+                    x = x + 1;
+                }
+                else if (y < 9 && map.getCellStatus(x,y+1) <= 1){
+                    System.out.println("Ячейка сниз ОГОНЬ");
+                    y = y + 1;
+                }
+
+                if (map.getCellStatus(x,y) == 1) {
+                    getit = 1;
+                }
+            }
         }
     }
 

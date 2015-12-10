@@ -38,18 +38,21 @@ public class Start {
         while (count){
             switch (checkHit){
                 case 1:
-                    System.out.println("Карта противника: ");
+                    //System.out.println("Карта противника: ");
                     //enemyMap.printHiddenMap();
-                    enemyMap.printMap();
+                    //enemyMap.printMap();
 
-                    System.out.println("\nКарта игрока: ");
-                    playerMap.printMap();
+                    //System.out.println("\nКарта игрока: ");
+                    //playerMap.printMap();
 
                     System.out.println("Ваш ход");
                     checkHit = human.doShoot(); break;
                 case 2:
                     System.out.println("\nСтреляет противник");
-                    checkHit = robot.doShoot(); break;
+                    checkHit = robot.doShoot();
+                    System.out.println("\nКарта игрока: ");
+                    playerMap.printMap();
+                    break;
             }
 
             //Завершаем игру, если у кого-то закончатся корабли.

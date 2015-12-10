@@ -78,7 +78,6 @@ public class Ship {
 
         for (int i = 0; i < decks.size(); i++) {
             if(decks.get(i).getStatus() == 1) countOfDeckAlive++;
-            System.out.println("Decks status "+ decks.get(i).getStatus());
         }
         if (countOfDeckAlive != 0) result = true;
 

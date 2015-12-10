@@ -61,10 +61,12 @@ public class Logic {
                 }
             }
         }
-        else{
+        else if (map.getCellStatus(x,y) == 0){
             map.setStatusCell(x,y,3);
             result = false;
         }
+        else result = false;
+
         return result;
     }
 
