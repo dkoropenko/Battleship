@@ -18,7 +18,7 @@ public class Robot extends Logic {
     private int startX, startY;
 
     //Сигнализация о попадании в корабль
-    private int hit, hits;
+    private int hit;
     private int getit;
 
     //Количество свободных (не стрелянных) ячеек карты
@@ -67,8 +67,9 @@ public class Robot extends Logic {
     //и добивает корабли
     private void easyDiffucult(){
 
+        System.out.println("HIT = "+ hit);
         //Если добили корабль, то бьем опять случайно
-        if (hit == 1 && ships.get(shipID).getHits() == ships.get(shipID).getSize()) {
+        if (ships.get(shipID).getHits() == ships.get(shipID).getSize()) {
             hit = 0;
             getit = 0;
             orientation = "";
@@ -96,71 +97,61 @@ public class Robot extends Logic {
             startX = x;
             startY = y;
 
-            System.out.println("StartX = "+ startX);
-            System.out.println("StartY = "+ startY);
-
             //Очищаем коллекцию пустых клеток.
             freeCell.clear();
         }
         //Если ранили корабль, то добиваем.
         else
         {
-            System.out.println("Добиваем корабль.");
-
             if (getit == 1){
-                System.out.println("Попали, ёпта )))");
+                System.out.println("X = "+ x +" StartX = "+ startX);
+                System.out.println("Y = "+ y +" StartY = "+ startY);
+
+                //Определение ориентации корабля на поле.
                 if (x < startX || x > startX) orientation = "horizont";
                 else orientation = "vertical";
 
-                System.out.println("Ориентация корабля: "+ orientation);
+                System.out.println("GETIT = "+ getit + " Orientation = "+ orientation);
 
-
-                //Осталось этот свитч доделать и обстрел готов!!!!
+                //Добивание корабля по горизонтали и вертикали
                 switch (orientation){
                     case "horizont":
-                        if (map.getCellStatus(x,y)==3){
-                            startX += 1;
+                        if (x >= 0 && map.getCellStatus(x,y) == 2 && map.getCellStatus(x-1,y) < 2){
+                            x -= 1;
+                        }
+                        else {
+                            startX++;
                             x = startX;
                         }
-                        else
-                            x -= 1;
                         break;
                     case "vertical":
-                        if (map.getCellStatus(x,y) == 3){
-                            startY += 1;
+                        if (y >= 0 && map.getCellStatus(x,y) == 2 && map.getCellStatus(x,y-1) < 2){
+                            y -= 1;
+                        }
+                        else{
+                            startY++;
                             y = startY;
                         }
-                        else y -= 1;
                 }
 
             }
             else{
+                //Обстреливаем вокруг ячейки, что бы узнать ориентацию корабля.
                 x = startX; y = startY;
 
-                System.out.println("Обстрел вокруг корабля");
-                if (x > 0 && map.getCellStatus(x - 1, y) <= 1){
-                    System.out.println("Ячейка слева ОГОНЬ");
-                    x = x - 1;
-                }
-                else if (y > 0 && map.getCellStatus(x,y-1) <= 1) {
-                    System.out.println("Ячейка сверху ОГОНЬ");
-                    y = y - 1;
-                }
-                else if (x < 9 && map.getCellStatus(x+1,y) <= 1) {
-                    System.out.println("Ячейка справа ОГОНЬ");
-                    x = x + 1;
-                }
-                else if (y < 9 && map.getCellStatus(x,y+1) <= 1){
-                    System.out.println("Ячейка сниз ОГОНЬ");
-                    y = y + 1;
-                }
 
-                if (map.getCellStatus(x,y) == 1) {
-                    getit = 1;
-                }
+                if (x > 0 && map.getCellStatus(x - 1, y) <= 1) x = x - 1;
+                else if (y > 0 && map.getCellStatus(x,y-1) <= 1) y = y - 1;
+                else if (x < 9 && map.getCellStatus(x+1,y) <= 1) x = x + 1;
+                else if (y < 9 && map.getCellStatus(x,y+1) <= 1) y = y + 1;
+            }
+
+            if (map.getCellStatus(x,y) == 1) {
+                getit = 1;
             }
         }
     }
+
 
     private void normalDiffucult(){
         boolean count = true;

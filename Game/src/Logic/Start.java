@@ -45,13 +45,13 @@ public class Start {
                     //System.out.println("\nКарта игрока: ");
                     //playerMap.printMap();
 
-                    System.out.println("Ваш ход");
-                    checkHit = human.doShoot(); break;
+                    System.out.println("\nВаш ход");
+                    //checkHit = human.doShoot(); break;
                 case 2:
                     System.out.println("\nСтреляет противник");
-                    checkHit = robot.doShoot();
                     System.out.println("\nКарта игрока: ");
                     playerMap.printMap();
+                    checkHit = robot.doShoot();
                     break;
             }
 
@@ -63,10 +63,11 @@ public class Start {
 
         //Выводим результат
         System.out.println("Финал игры:");
-        enemyMap.printMap();
+        //enemyMap.printMap();
+        playerMap.printMap();
 
-        for (int j = 0; j < enemyShips.size(); j++) {
-            enemyShips.get(j).printShip();
-        }
+        //for (int j = 0; j < enemyShips.size(); j++) {
+        //    enemyShips.get(j).printShip();
+       // }
     }
 }
